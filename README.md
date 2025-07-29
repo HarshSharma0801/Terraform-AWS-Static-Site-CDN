@@ -31,8 +31,6 @@ As a DevOps engineer in a modern cloud-native company, you're tasked with deploy
 
 Configure your AWS credentials and Terraform environment
 
-<img width="940" height="460" alt="AWS CLI Configuration" src="#" />
-
 ```bash
 # Install AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -61,8 +59,6 @@ terraform --version
 ### Step 2: Provider Configuration Setup
 
 Configure Terraform providers for multi-region AWS deployment
-
-<img width="940" height="753" alt="Provider Configuration" src="#" />
 
 ```hcl
 # provider.tf
@@ -101,12 +97,15 @@ resource "aws_route53_zone" "custom_domain" {
 }
 ```
 
-<img width="940" height="300" alt="Route 53 Hosted Zone" src="#" />
-
 **Why Route 53 comes first:**
 
 - DNS validation for SSL certificates requires an active hosted zone
 - Provides authoritative DNS servers that must be configured with your domain registrar
+
+**After Creation of Hosted Zone:**
+
+<img width="1467" height="754" alt="Screenshot 2025-07-29 at 6 17 12 PM" src="https://github.com/user-attachments/assets/8b959b58-dd5d-4dd1-bd71-f92493a51d43" />
+
 
 ### Step 4: SSL Certificate Creation and DNS Validation
 
@@ -149,13 +148,15 @@ resource "aws_acm_certificate_validation" "cert_validation" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 ```
-
-<img width="940" height="400" alt="SSL Certificate Validation Process" src="#" />
-
 **Why DNS validation over email validation:**
 
 - Automated validation process that doesn't require manual intervention
 - Enables automatic certificate renewal without human interaction
+
+**After Validation Completion:**
+
+<img width="1369" height="754" alt="Screenshot 2025-07-29 at 6 15 07 PM" src="https://github.com/user-attachments/assets/34aa1aec-771a-4233-bd0b-cff9fde30f29" />
+
 
 ### Step 5: S3 Bucket Configuration with Security
 
@@ -178,12 +179,15 @@ resource "aws_s3_bucket_public_access_block" "bucket_s3_public_access" {
 }
 ```
 
-<img width="940" height="350" alt="S3 Security Configuration" src="#" />
-
 **Why private S3 bucket is more secure:**
 
 - Prevents direct public access to S3 content, forcing traffic through CloudFront
 - Protects against DDoS attacks and unauthorized access to origin server
+
+**After Completion of Creation of Bucket:**
+
+<img width="1369" height="754" alt="Screenshot 2025-07-29 at 6 16 10 PM" src="https://github.com/user-attachments/assets/8b321cfa-3d5d-4d0a-a0f4-174c86216ed3" />
+
 
 ### Step 6: Website Content Upload
 
@@ -218,6 +222,11 @@ resource "aws_s3_object" "goku_jpeg" {
 - Ensures browsers interpret files correctly (HTML as web pages, images as images)
 - Improves SEO and user experience by setting appropriate MIME types
 
+**After Completion of Uploading:**
+
+<img width="1369" height="754" alt="Screenshot 2025-07-29 at 6 16 14 PM" src="https://github.com/user-attachments/assets/4d2c1d6b-a970-4936-ae69-c7c303a30f97" />
+
+
 ### Step 7: Origin Access Control (OAC) Setup
 
 Create secure access control for CloudFront to S3 communication
@@ -231,8 +240,6 @@ resource "aws_cloudfront_origin_access_control" "oac" {
   signing_protocol                  = "sigv4"
 }
 ```
-
-<img width="940" height="300" alt="Origin Access Control Configuration" src="#" />
 
 **Why OAC over Legacy OAI:**
 
@@ -293,8 +300,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 }
 ```
 
-<img width="940" height="500" alt="CloudFront Distribution Architecture" src="#" />
-
 **Critical SSL certificate configuration explanation:**
 
 - `acm_certificate_arn` uses the validation resource ARN, not the certificate ARN directly
@@ -304,6 +309,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
 - SNI (Server Name Indication) reduces costs compared to dedicated IP
 - TLS 1.2 minimum ensures modern security standards while maintaining broad compatibility
+
+**After Completion of CloudFront Creation:**
+
+<img width="1467" height="754" alt="Screenshot 2025-07-29 at 6 16 43 PM" src="https://github.com/user-attachments/assets/ce49c270-44ed-4bb4-87c8-8e61ca2dfe22" />
+
 
 ### Step 9: S3 Bucket Policy for CloudFront Access
 
@@ -373,6 +383,19 @@ resource "aws_route53_record" "www" {
 
 - Alias records can be used for root domains (CNAME cannot)
 - No additional DNS lookup overhead, providing faster resolution
+
+
+## 🛸 Verification
+
+**Open Browser and Check Network:**
+
+<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 07 05 PM" src="https://github.com/user-attachments/assets/417b1058-00cb-4c76-98dd-54bccb8ad674" />
+
+<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 06 40 PM" src="https://github.com/user-attachments/assets/1a7392ac-4176-4a6c-8f35-b766bbcbb4c8" />
+
+<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 06 22 PM" src="https://github.com/user-attachments/assets/bd91bd7e-dbbc-40f0-9ea4-6098b6a5dcd8" />
+
+
 
 ## 🏗️ Architecture Overview
 
@@ -456,7 +479,8 @@ terraform output route53_name_servers
 # ns-567.awsdns-78.co.uk
 ```
 
-<img width="940" height="400" alt="Domain Registrar Configuration" src="#" />
+<img width="1152" height="691" alt="Screenshot 2025-07-29 at 3 57 16 PM" src="https://github.com/user-attachments/assets/90cb1dbe-d9af-41d7-bd37-9c69327e180d" />
+
 
 **Why nameserver configuration is required:**
 
