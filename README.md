@@ -387,13 +387,20 @@ resource "aws_route53_record" "www" {
 
 ## 🛸 Verification
 
-**Open Browser and Check Network:**
+**Website:**
 
-<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 07 05 PM" src="https://github.com/user-attachments/assets/417b1058-00cb-4c76-98dd-54bccb8ad674" />
+<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 06 22 PM" src="https://github.com/user-attachments/assets/bd91bd7e-dbbc-40f0-9ea4-6098b6a5dcd8" />
+
+**Website without CloudFront (took some time to load for first time):**
 
 <img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 06 40 PM" src="https://github.com/user-attachments/assets/1a7392ac-4176-4a6c-8f35-b766bbcbb4c8" />
 
-<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 06 22 PM" src="https://github.com/user-attachments/assets/bd91bd7e-dbbc-40f0-9ea4-6098b6a5dcd8" />
+**Website with CloudFront (very less time to load):**
+
+- Now Cached in Nearest Edge Location
+
+<img width="1467" height="803" alt="Screenshot 2025-07-29 at 7 07 05 PM" src="https://github.com/user-attachments/assets/417b1058-00cb-4c76-98dd-54bccb8ad674" />
+
 
 
 
