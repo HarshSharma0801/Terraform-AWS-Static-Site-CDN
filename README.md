@@ -1,4 +1,4 @@
-# 🚀 AWS Static Site with CloudFront CDN using Terraform
+# 🚀 Terraform AWS Static Site CDN
 
 ## 📋 Scenario
 
