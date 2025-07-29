@@ -1,0 +1,30 @@
+# Terraform Core Files
+# These files should not be committed to version control. They are specific to a
+# single run and contain sensitive information.
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+crash.log
+
+# Terraform Plan Files
+# These are temporary and may contain sensitive data from your variables.
+*.tfplan
+
+# Local Variable Files
+# Do NOT commit your secret variables. Use a terraform.tfvars.example file
+# to show what variables are needed.
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Override Files
+# These are used for local overrides and should not be versioned.
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# OS-specific files
+.DS_Store
+Thumbs.db
